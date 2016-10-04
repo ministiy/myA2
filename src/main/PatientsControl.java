@@ -2,10 +2,11 @@ package main;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 public class PatientsControl 
@@ -13,6 +14,8 @@ public class PatientsControl
 	PatientsPanel patientsPanel;
 	PatientCSVDataModel patientCSVDataModel;
 	DefaultTableModel tableModel;
+	ListSelectionModel listSelectionModel;
+	int row;
 	
 	public PatientsControl(PatientsPanel panel, PatientCSVDataModel patientCSVDataModel)
 	{
@@ -22,24 +25,25 @@ public class PatientsControl
 		tableModel = (DefaultTableModel) this.patientsPanel.getPatientsTable().getModel();
 		tableModel.setDataVector(this.patientCSVDataModel.getPatientTableData() , this.patientCSVDataModel.getPatientTableHeader());
 		
-		this.patientsPanel.getPatientsTable().addMouseListener(new MouseAdapter()
+		listSelectionModel = this.patientsPanel.getPatientsTable().getSelectionModel();
+		listSelectionModel.addListSelectionListener(new ListSelectionListener()
 		{
-			public void mouseClicked(MouseEvent e)
+			public void valueChanged(ListSelectionEvent e)
 			{
-				if (e.getClickCount() == 1 || e.getClickCount() == 2)
+				ListSelectionModel lsm = (ListSelectionModel)e.getSource();
+				int minIndex = lsm.getMinSelectionIndex();
+				int maxIndex = lsm.getMaxSelectionIndex();
+				for (int i = minIndex;i<=maxIndex;i++)
 				{
-					JTable target = (JTable)e.getSource();
-					int row = target.getSelectedRow();
-					MainMenuFrame mainMenuFrame = patientsPanel.getParentFrame();
-					patientsPanel.setVisible(false);
-					String title = "Patient: "+ (String) tableModel.getValueAt(row, 0);
-					//mainMenuFrame.getTitlePanel().setPanelTitle(title);
-					//mainMenuFrame.add(mainMenuFrame.getTitlePanel(),BorderLayout.NORTH);
-					mainMenuFrame.getEditPatientPanel().setRow(row);
-					mainMenuFrame.getEditPatientPanel().setTitle(title);
-					mainMenuFrame.add(mainMenuFrame.getEditPatientPanel(),BorderLayout.CENTER);
-					//mainMenuFrame.add(mainMenuFrame.getEditButtonPanel(),BorderLayout.SOUTH);
+					if(lsm.isSelectedIndex(i))
+						row = i;
 				}
+				MainMenuFrame mainMenuFrame = patientsPanel.getParentFrame();
+				patientsPanel.setVisible(false);
+				String title = "Patient: "+ (String) tableModel.getValueAt(row, 0);
+				mainMenuFrame.getEditPatientPanel().setRow(row);
+				mainMenuFrame.getEditPatientPanel().setTitle(title);
+				mainMenuFrame.add(mainMenuFrame.getEditPatientPanel(),BorderLayout.CENTER);
 			}
 		});
 		this.patientsPanel.getAddNewButton().addActionListener(new ActionListener()
