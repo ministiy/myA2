@@ -76,7 +76,12 @@ public class PatientCSVDataModel
 		try
 		{
 			bw = new BufferedWriter(new FileWriter(patientCSVFile,true));
-			bw.append((String) newPatientData[0] + "," + (String) newPatientData[1] + "," + (String) newPatientData[2]);
+			for (int i = 0;i<newPatientData.length;i++)
+			{
+				if(newPatientData[i] == null)
+					newPatientData[i] = "";
+			}
+				bw.append("\n"+(String) newPatientData[0] + "," + (String) newPatientData[1] + "," + (String) newPatientData[2]+","+(String) newPatientData[3] + ","+(String) newPatientData[4]);
 		}
 		catch (IOException e)
 		{

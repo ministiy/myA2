@@ -10,15 +10,16 @@ import javax.swing.JPanel;
 public class ButtonPanel extends JPanel 
 {
 	static final long serialVersionUID = 12L;
-	JButton backButton,addNewButton;
+	JButton backButton,addNewButton,cancelButton,saveButton;
 	
 	public ButtonPanel()
 	{
 		backButton = new JButton("Back");
 		addNewButton = new JButton("Add New");
-		
+		cancelButton = new JButton("Cancel");
+		saveButton = new JButton("Save");
 		setLayout(new GridLayout(0,3));
-		
+
 		backButton.setAlignmentX(Component.LEFT_ALIGNMENT);
 		backButton.setMaximumSize(new Dimension(150,50));
 		addNewButton.setAlignmentX(Component.RIGHT_ALIGNMENT);

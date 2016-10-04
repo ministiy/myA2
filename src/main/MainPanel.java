@@ -1,11 +1,14 @@
 package main;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class MainPanel extends JPanel
 {
@@ -13,12 +16,20 @@ public class MainPanel extends JPanel
 	
 	MainMenuFrame parentFrame;
 	JButton ambulanceButton,patientButton,exitButton;
-	TitlePanel titlePanel;
+	JLabel title;
 	public MainPanel(MainMenuFrame parent)
 	{
+		JPanel firstPanel = new JPanel();
+		title = new JLabel("Ambulance Tracking System");
+		title.setHorizontalAlignment(SwingConstants.CENTER);
+		title.setFont(new Font("Sans Serif",Font.BOLD,24));
+		
 		setParentFrame(parent);
-	    setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-	    add(Box.createRigidArea(new Dimension(0,15)));
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		
+		firstPanel.setLayout(new BoxLayout(firstPanel,BoxLayout.X_AXIS));
+		firstPanel.add(title);
+	 
 	    patientButton = new JButton("Patients");
 		patientButton.setMaximumSize(new Dimension(150,50));
 		
@@ -32,6 +43,9 @@ public class MainPanel extends JPanel
 		ambulanceButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
+		add(Box.createRigidArea(new Dimension(0,10)));
+		add(firstPanel);
+	    add(Box.createRigidArea(new Dimension(0,30)));
 		add(patientButton);
 		add(Box.createRigidArea(new Dimension(0,10)));
 		add(ambulanceButton);
@@ -39,11 +53,6 @@ public class MainPanel extends JPanel
 		add(exitButton);
 	}
 		
-	public TitlePanel getTitlePanel()
-	{
-		return titlePanel;
-	}
-	
 	public JButton getPatientButton() 
 	{
 		return patientButton;

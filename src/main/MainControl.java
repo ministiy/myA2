@@ -11,10 +11,9 @@ public class MainControl
 	PatientsPanel patientsPanel;
 	ButtonPanel buttonPanel;
 	
-	public MainControl(MainPanel panel,TitlePanel titlePanel,PatientsPanel patientsPanel, ButtonPanel buttonPanel,AmbulancesPanel ambulancesPanel)
+	public MainControl(MainPanel panel,PatientsPanel patientsPanel, ButtonPanel buttonPanel,AmbulancesPanel ambulancesPanel)
 	{
 		this.mainPanel = panel;
-		this.titlePanel = titlePanel;
 		this.patientsPanel = patientsPanel;
 		this.buttonPanel = buttonPanel;
 		
@@ -25,11 +24,7 @@ public class MainControl
 				MainMenuFrame mainMenuFrame = mainPanel.getParentFrame();
 				mainPanel.setVisible(false);
 				patientsPanel.setVisible(true);
-				buttonPanel.setVisible(true);
-				titlePanel.setPanelTitle("Patients");
-				mainMenuFrame.add(titlePanel,BorderLayout.NORTH);
 				mainMenuFrame.add(mainMenuFrame.getPatientsPanel(),BorderLayout.CENTER);
-				mainMenuFrame.add(mainMenuFrame.getButtonPanel(),BorderLayout.PAGE_END);
 			}
 		});
 		

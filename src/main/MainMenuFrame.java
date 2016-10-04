@@ -14,13 +14,18 @@ public class MainMenuFrame extends JFrame
 	PatientsPanel patientsPanel;
 	AmbulancesPanel ambulancesPanel;
 	ButtonPanel buttonPanel;
+	EditPatientPanel editPatientPanel;
+	EditButtonPanel editButtonPanel;
+	AddNewPatientPanel addNewPatientPanel;
 	
+
 	AmbulanceCSVDataModel ambulancesDataModel;
 	PatientCSVDataModel patientsDataModel;
 	
 	MainControl mainControl;
 	PatientsControl patientsControl;
 	AmbulancesControl ambulancesControl;
+	AddNewPatientControl addNewPatientControl;
 	
 	public MainMenuFrame()
 	{
@@ -30,7 +35,7 @@ public class MainMenuFrame extends JFrame
 	public void createAndShowGUI()
 	{
 		mainPanel = new MainPanel(this);
-		titlePanel = new TitlePanel("Ambulance Tracking System");
+		//titlePanel = new TitlePanel("Ambulance Tracking System");
 		patientsPanel = new PatientsPanel(this);
 		ambulancesPanel = new AmbulancesPanel(this);
 		buttonPanel = new ButtonPanel();
@@ -38,17 +43,39 @@ public class MainMenuFrame extends JFrame
 		patientsDataModel = new PatientCSVDataModel();
 		ambulancesDataModel = new AmbulanceCSVDataModel();
 		
-		mainControl = new MainControl(mainPanel,titlePanel,patientsPanel,buttonPanel,ambulancesPanel);
-		patientsControl = new PatientsControl(patientsPanel,patientsDataModel,buttonPanel);
+		mainControl = new MainControl(mainPanel,patientsPanel,buttonPanel,ambulancesPanel);
+		patientsControl = new PatientsControl(patientsPanel,patientsDataModel);
 		ambulancesControl = new AmbulancesControl(ambulancesPanel,ambulancesDataModel,buttonPanel);
+		
+		addNewPatientPanel = new AddNewPatientPanel(patientsControl,0,patientsPanel);
+		addNewPatientControl = new AddNewPatientControl(addNewPatientPanel);
+		
+		editPatientPanel = new EditPatientPanel(patientsControl,0,patientsPanel);
 		
 		setTitle(label);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
+		//setLocationRelativeTo(null);
+		setLocation(100,200);
 		setSize(500,400);
-		add(titlePanel,BorderLayout.NORTH);
+		//add(titlePanel,BorderLayout.NORTH);
 		add(mainPanel,BorderLayout.CENTER);
 	}
+	public EditPatientPanel getEditPatientPanel() {
+		return editPatientPanel;
+	}
+
+	public void setEditPatientPanel(EditPatientPanel editPatientPanel) {
+		this.editPatientPanel = editPatientPanel;
+	}
+
+	public EditButtonPanel getEditButtonPanel() {
+		return editButtonPanel;
+	}
+
+	public void setEditButtonPanel(EditButtonPanel editButtonPanel) {
+		this.editButtonPanel = editButtonPanel;
+	}
+
 	public PatientsControl getPatientsControl() {
 		return patientsControl;
 	}
@@ -132,5 +159,14 @@ public class MainMenuFrame extends JFrame
 	{
 		this.patientsDataModel = patientsDataModel;
 	}
+	
+	public AddNewPatientPanel getAddNewPatientPanel() {
+		return addNewPatientPanel;
+	}
+
+	public void setAddNewPatientPanel(AddNewPatientPanel addNewPatientPanel) {
+		this.addNewPatientPanel = addNewPatientPanel;
+	}
+
 	
 }
