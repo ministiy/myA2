@@ -17,9 +17,10 @@ public class AddNewPatientControl
 			public void actionPerformed(ActionEvent e)
 			{
 				MainMenuFrame mainMenuFrame = addNewPatientPanel.getParentFrame().getParentFrame();
-				addNewPatientPanel.setVisible(false);
-				mainMenuFrame.getPatientsPanel().setVisible(true);
-				mainMenuFrame.add(mainMenuFrame.getPatientsPanel(),BorderLayout.CENTER);
+				MainMenuFrame newMainMenuFrame = new MainMenuFrame();
+				mainMenuFrame.dispose();
+				newMainMenuFrame.add(newMainMenuFrame.getPatientsPanel(),BorderLayout.CENTER);
+				newMainMenuFrame.setVisible(true);
 			}
 		});
 		

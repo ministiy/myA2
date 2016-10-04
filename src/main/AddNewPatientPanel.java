@@ -42,22 +42,17 @@ public class AddNewPatientPanel extends JPanel
 		patientLocationY = new JTextField();
 		this.patientsControl = patientsControl;
 		newData = new Object[5];
-		
-		patientID.setEnabled(false);
 		tabModel = this.patientsControl.getTableModel();
+		patientID.setEnabled(false);
+		
 		lastRow = (String)tabModel.getValueAt(tabModel.getRowCount()-1, 0);
 		int lastRow2 = Integer.parseInt(lastRow)+1;
 		lastRow = ""+lastRow2;
 		patientID.setText(lastRow);
-		
-		title = new JLabel();
+	
+		title = new JLabel("Patients");
 		title.setHorizontalAlignment(SwingConstants.CENTER);
 		title.setFont(new Font("Sans Serif",Font.BOLD,24));
-		
-		if(title.getText().equals(""))
-		{
-			title.setText("Patients");
-		}
 		
 		cancelButton = new JButton("Cancel");
 		saveButton = new JButton("Save");
@@ -215,41 +210,26 @@ public class AddNewPatientPanel extends JPanel
 		return patientID;
 	}
 
-	public void setPatientID(JTextField patientID) {
-		this.patientID = patientID;
+	public void setPatientID(String patientID) {
+		this.patientID.setText(patientID);
 	}
 
 	public JTextField getPatientLocationX() {
 		return patientLocationX;
 	}
 
-	public void setPatientLocationX(JTextField patientLocationX) {
-		this.patientLocationX = patientLocationX;
+	public void setPatientLocationX(String patientLocationX) {
+		this.patientLocationX.setText(patientLocationX);
 	}
 
 	public JTextField getPatientLocationY() {
 		return patientLocationY;
 	}
 
-	public void setPatientLocationY(JTextField patientLocationY) {
-		this.patientLocationY = patientLocationY;
+	public void setPatientLocationY(String patientLocationY) {
+		this.patientLocationY.setText(patientLocationY);
 	}
 
-	public JTextField getPatientStatus() {
-		return patientStatus;
-	}
-
-	public void setPatientStatus(JTextField patientStatus) {
-		this.patientStatus = patientStatus;
-	}
-
-	public JTextField getAssignedAmbulance() {
-		return assignedAmbulance;
-	}
-
-	public void setAssignedAmbulance(JTextField assignedAmbulance) {
-		this.assignedAmbulance = assignedAmbulance;
-	}
 
 	public JButton getCancelButton() {
 		return cancelButton;
@@ -288,5 +268,26 @@ public class AddNewPatientPanel extends JPanel
 	public void setRow(int row)
 	{
 		this.row = row;
+	}
+
+	public JComboBox<String> getStatusComboBox() {
+		return statusComboBox;
+	}
+
+	public void setStatusComboBox(Object statusComboBox) {
+		this.statusComboBox.setSelectedItem(statusComboBox);
+	}
+
+	public JComboBox<Object> getAmbulanceComboBox() {
+		return ambulanceComboBox;
+	}
+
+	public void setAmbulanceComboBox(Object ambulanceComboBox) {
+		this.ambulanceComboBox.setSelectedItem(ambulanceComboBox);
+	}
+	
+	public void setTitle(String title)
+	{
+		this.title.setText(title);
 	}
 }

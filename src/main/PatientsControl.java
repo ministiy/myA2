@@ -3,7 +3,6 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -39,11 +38,16 @@ public class PatientsControl
 						row = i;
 				}
 				MainMenuFrame mainMenuFrame = patientsPanel.getParentFrame();
-				patientsPanel.setVisible(false);
+				MainMenuFrame newMainMenuFrame = new MainMenuFrame();
+				mainMenuFrame.dispose();
 				String title = "Patient: "+ (String) tableModel.getValueAt(row, 0);
-				mainMenuFrame.getEditPatientPanel().setRow(row);
-				mainMenuFrame.getEditPatientPanel().setTitle(title);
-				mainMenuFrame.add(mainMenuFrame.getEditPatientPanel(),BorderLayout.CENTER);
+				newMainMenuFrame.getAddNewPatientPanel().setRow(row);
+				newMainMenuFrame.getAddNewPatientPanel().setTitle(title);
+				newMainMenuFrame.getAddNewPatientPanel().setPatientID((String)tableModel.getValueAt(row, 0));
+				newMainMenuFrame.getAddNewPatientPanel().setStatusComboBox(tableModel.getValueAt(row, 2));
+				newMainMenuFrame.getAddNewPatientPanel().setAmbulanceComboBox(tableModel.getValueAt(row, 3));
+				newMainMenuFrame.add(newMainMenuFrame.getAddNewPatientPanel(),BorderLayout.CENTER);
+				newMainMenuFrame.setVisible(true);
 			}
 		});
 		this.patientsPanel.getAddNewButton().addActionListener(new ActionListener()
