@@ -3,6 +3,7 @@ package main;
 import java.awt.Dimension;
 import java.awt.Font;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -46,6 +47,7 @@ public class PatientsPanel extends JPanel
 		
 		secondPanel.setLayout(new BoxLayout(secondPanel,BoxLayout.X_AXIS));
 		secondPanel.add(backButton);
+		secondPanel.add(Box.createRigidArea(new Dimension(100,0)));
 		secondPanel.add(addNewButton);
 		
 		patientsTable = new JTable();

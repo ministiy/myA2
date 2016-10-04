@@ -5,12 +5,15 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -26,7 +29,7 @@ public class AddNewPatientPanel extends JPanel
 	JComboBox<Object> ambulanceComboBox;
 	PatientsControl patientsControl;
 	TableModel tabModel;
-	ArrayList<String> ambulance;
+	ArrayList<String> ambulance,ambulanceList;
 	Object[] newData;
 	JButton cancelButton,saveButton;
 	JLabel title;
@@ -60,19 +63,13 @@ public class AddNewPatientPanel extends JPanel
 		cancelButton.setMaximumSize(new Dimension(150,50));
 		saveButton.setMaximumSize(new Dimension(150,50));
 		
-		String[] status = {"Pending", "Assigned", "Transporting", "Completed"};
+		String[] status = {"Assigned", "Completed", "Pending", "Transporting"};
 		statusComboBox = new JComboBox<String>(status);
 		statusComboBox.setEditable(false);
-		if (row == 0)
-		{
-			statusComboBox.setSelectedIndex(-1);
-		}
-		else
-		{
-			statusComboBox.setSelectedItem(tabModel.getValueAt(row, 2));
-		}
+		statusComboBox.setSelectedIndex(-1);
 		
 		ambulance = new ArrayList<String>();
+		ambulanceList = new ArrayList<String>();
 		ambulance.add("None");
 		
 		for (int i=0;i<tabModel.getRowCount();i++)
@@ -83,20 +80,29 @@ public class AddNewPatientPanel extends JPanel
 				if (!ambulance.contains(data))
 				{
 					ambulance.add((String) tabModel.getValueAt(i, 3));
+					ambulanceList.add((String) tabModel.getValueAt(i, 3));
 				}
+			}
+			else
+			{
+				ambulance.add("");
 			}
 		}
 		
-		ambulanceComboBox = new JComboBox<Object>(ambulance.toArray());
+		Collections.sort(ambulanceList, new Comparator<String>()
+				{
+					public int compare(String s1, String s2)
+					{
+						int amb = Integer.parseInt(s1.substring(1));
+						int amb2 = Integer.parseInt(s2.substring(1));
+						return amb-amb2;
+					}
+				});
+
+		ambulanceList.add(0, "None");
+		ambulanceComboBox = new JComboBox<Object>(ambulanceList.toArray());
 		ambulanceComboBox.setEditable(false);
-		if (row == 0)
-		{
-			ambulanceComboBox.setSelectedIndex(-1);
-		}
-		else
-		{
-			ambulanceComboBox.setSelectedItem(tabModel.getValueAt(row, 3));
-		}
+		ambulanceComboBox.setSelectedIndex(0);
 		
 		patientID.setMaximumSize(new Dimension(200,30));
 		newData[0] = lastRow;
@@ -107,7 +113,10 @@ public class AddNewPatientPanel extends JPanel
 			public void actionPerformed(ActionEvent e)
 				{
 					String word = patientLocationX.getText();
-					newData[1] = word;
+					if (Integer.parseInt(word) < 100 && Integer.parseInt(word)>0)
+						newData[1] = word;
+					else
+						JOptionPane.showMessageDialog(null, "Location range between 0-100 exclusive");
 				}
 		});
 		
@@ -117,7 +126,10 @@ public class AddNewPatientPanel extends JPanel
 			public void actionPerformed(ActionEvent e)
 				{
 					String word = patientLocationY.getText();
-					newData[2] = word;
+					if (Integer.parseInt(word) < 100 && Integer.parseInt(word)>0)
+						newData[2] = word;
+					else
+						JOptionPane.showMessageDialog(null, "Location range between 0-100 exclusive");
 				}
 		});
 		

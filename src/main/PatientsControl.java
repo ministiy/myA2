@@ -43,7 +43,10 @@ public class PatientsControl
 				String title = "Patient: "+ (String) tableModel.getValueAt(row, 0);
 				newMainMenuFrame.getAddNewPatientPanel().setRow(row);
 				newMainMenuFrame.getAddNewPatientPanel().setTitle(title);
+				String[] loc = ((String)tableModel.getValueAt(row, 1)).split(",");
 				newMainMenuFrame.getAddNewPatientPanel().setPatientID((String)tableModel.getValueAt(row, 0));
+				newMainMenuFrame.getAddNewPatientPanel().setPatientLocationX(loc[0].substring(1));
+				newMainMenuFrame.getAddNewPatientPanel().setPatientLocationY(loc[1].substring(0, loc[1].length()-1));
 				newMainMenuFrame.getAddNewPatientPanel().setStatusComboBox(tableModel.getValueAt(row, 2));
 				newMainMenuFrame.getAddNewPatientPanel().setAmbulanceComboBox(tableModel.getValueAt(row, 3));
 				newMainMenuFrame.add(newMainMenuFrame.getAddNewPatientPanel(),BorderLayout.CENTER);
